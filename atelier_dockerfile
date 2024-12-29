@@ -1,0 +1,35 @@
+FROM ubuntu:24.04
+
+ARG SCRIPTS_GIT_URL="https://github.com/rishabhkhemka/setup_scripts"
+ARG USER_NAME="dev"
+ARG USER_PASSWORD="dev"
+ARG SUDO_ACCESS="yes"
+ARG PASSWORDLESS_SUDO="yes" 
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt update -y && apt upgrade -y && \
+    apt install -y sudo wget curl git neovim nano wget
+
+RUN cd /root && git clone $SCRIPTS_GIT_URL 
+RUN chmod +x /root/setup_scripts/*.sh
+
+RUN /root/setup_scripts/setup-zsh.sh || (echo "zsh setup failed" && exit 1)
+RUN /root/setup_scripts/setup-cpp.sh || (echo "cpp setup failed" && exit 1)
+RUN /root/setup_scripts/setup-go.sh || (echo "go setup failed" && exit 1)
+RUN /root/setup_scripts/setup-user.sh \
+    --username ${USER_NAME} \
+    --password ${USER_PASSWORD} \
+    --sudo ${SUDO_ACCESS} \
+    --passwordless ${PASSWORDLESS_SUDO} \
+    || (echo "user setup failed" && exit 1)
+
+RUN apt clean && \
+    rm -rf /root/setup_scripts
+
+USER ${USER_NAME}
+WORKDIR /home/${USER_NAME}
+RUN mkdir workspace
+
+CMD ["zsh"]

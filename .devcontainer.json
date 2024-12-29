@@ -1,0 +1,27 @@
+{
+  "name": "${localWorkspaceFolder}",
+  "image": "atelier",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "go.toolsManagement.autoUpdate": true,
+        "go.useLanguageServer": true,
+        "editor.formatOnSave": true,
+        "C_Cpp.default.compilerPath": "/usr/bin/gcc-14",
+        "C_Cpp.default.cppStandard": "c++23",
+        "debug.allowBreakpointsEverywhere": true
+      },
+      "extensions": [
+        "eamodio.gitlens",
+        "golang.go",
+        "ms-vscode.cpptools"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/home/dev/workspace,type=bind"
+  ],
+  "remoteUser": "dev",
+  "workspaceFolder": "/home/dev/workspace"
+}
