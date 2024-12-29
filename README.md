@@ -35,10 +35,11 @@ A ready-to-code Docker workspace with pre-configured development tools and envir
 
 - Setup your workspace (vscode users):
     - Copy `.devcontainer.json` to your desired workspace folder
+    - Copy / Replace / Merge the .vscode directory in the folder
     - Open VSCode in that folder
     - Click the icon in the bottom-left corner
     - Select "Reopen in Container" from the menu
-    Your development environment will now start in the container.
+    Your development environment will now start in the container. Ignore tasks issue popup. It gets resolved after the extensions get installed.
 
 - Setup your workspace (terminal users):
     ```bash
